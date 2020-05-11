@@ -15,11 +15,15 @@ public class CategoriaService  {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public Categoria find(Integer id) throws ObjectNotFoundException {
+	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		try {
+			return obj.orElseThrow(() -> new ObjectNotFoundException(
+			"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		} catch (ObjectNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	
-	
+		return null;
+		}
 }
