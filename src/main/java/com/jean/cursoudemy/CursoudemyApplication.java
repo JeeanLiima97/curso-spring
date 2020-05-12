@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jean.cursoudemy.domain.Categoria;
 import com.jean.cursoudemy.domain.Cidade;
+import com.jean.cursoudemy.domain.Cliente;
+import com.jean.cursoudemy.domain.Endereco;
 import com.jean.cursoudemy.domain.Estado;
 import com.jean.cursoudemy.domain.Produto;
+import com.jean.cursoudemy.domain.enums.TipoCliente;
 import com.jean.cursoudemy.repository.CategoriaRepository;
 import com.jean.cursoudemy.repository.CidadeRepository;
+import com.jean.cursoudemy.repository.ClienteRepository;
+import com.jean.cursoudemy.repository.EnderecoRepository;
 import com.jean.cursoudemy.repository.EstadoRepository;
 import com.jean.cursoudemy.repository.ProdutoRepository;
 
@@ -27,6 +32,9 @@ public class CursoudemyApplication implements CommandLineRunner {
 	private EstadoRepository estadorepository;
 	@Autowired
 	private CidadeRepository cidaderepository;
+	@Autowired
+	private ClienteRepository clienterepository;
+	@Autowired EnderecoRepository enderecorepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoudemyApplication.class, args);
@@ -65,12 +73,26 @@ public class CursoudemyApplication implements CommandLineRunner {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2,c3));
 		
-		
-		
+	
 		
 		estadorepository.saveAll(Arrays.asList(est1,est2));
 		cidaderepository.saveAll(Arrays.asList(c1,c2,c3));
 	
+
+		Cliente cli1 = new Cliente(null, "jean", "jean.jr.souza","045050505", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("75404701", "458501405"));
+		
+		Endereco e1 = new Endereco(null, "Rua Marechal", "138", "casa", "Centro", "44500000", cli1, c1);
+		Endereco e2 = new Endereco(null, "Rua de cina", "138", "casa", "Centro", "44500333", cli1, c2);
+	
+		cli1.getEndereco().addAll(Arrays.asList(e1,e2));
+	
+		clienterepository.saveAll(Arrays.asList(cli1));
+		
+		enderecorepository.saveAll(Arrays.asList(e1,e2));
+		
+		
+		
 	}
 
 }
