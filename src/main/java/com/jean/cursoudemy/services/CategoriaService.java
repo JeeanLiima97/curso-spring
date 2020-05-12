@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.jean.cursoudemy.domain.Categoria;
 import com.jean.cursoudemy.repository.CategoriaRepository;
+import com.jean.cursoudemy.services.exception.ObjectNotFoundException;
 
-import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class CategoriaService  {
@@ -17,13 +17,7 @@ public class CategoriaService  {
 	
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		try {
-			return obj.orElseThrow(() -> new ObjectNotFoundException(
-			"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
-		} catch (ObjectNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 		}
 }
