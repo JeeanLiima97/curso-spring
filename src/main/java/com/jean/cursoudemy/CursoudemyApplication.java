@@ -13,6 +13,7 @@ import com.jean.cursoudemy.domain.Cidade;
 import com.jean.cursoudemy.domain.Cliente;
 import com.jean.cursoudemy.domain.Endereco;
 import com.jean.cursoudemy.domain.Estado;
+import com.jean.cursoudemy.domain.ItemPedido;
 import com.jean.cursoudemy.domain.Pagamento;
 import com.jean.cursoudemy.domain.PagamentoComBoleto;
 import com.jean.cursoudemy.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.jean.cursoudemy.repository.CidadeRepository;
 import com.jean.cursoudemy.repository.ClienteRepository;
 import com.jean.cursoudemy.repository.EnderecoRepository;
 import com.jean.cursoudemy.repository.EstadoRepository;
+import com.jean.cursoudemy.repository.ItemPedidoRepository;
 import com.jean.cursoudemy.repository.PagamentoRepository;
 import com.jean.cursoudemy.repository.PedidoRepository;
 import com.jean.cursoudemy.repository.ProdutoRepository;
@@ -48,7 +50,8 @@ public class CursoudemyApplication implements CommandLineRunner {
 	PedidoRepository pedidoRepository;
 	@Autowired
 	PagamentoRepository pagamentoRepository;
-	
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
 	
 	
 	
@@ -121,10 +124,21 @@ public class CursoudemyApplication implements CommandLineRunner {
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
-		
 		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
 		
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.0, 2, 80.0);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100D, 1, 800.0);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 
 }
