@@ -6,6 +6,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+
+
+
 //classe auxiliar para representar a chave composta//
 @Embeddable
 public class ItemPedidoPK implements Serializable {
